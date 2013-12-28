@@ -33,25 +33,25 @@ I didn't define new types. Here is the type correspondence:
 
 |VI type	|Rust type	|
 |-----------|-----------|
-|ViUInt64	|u64		|
-|ViInt64	|i64		|
-|ViUInt32	|u32		|
-|ViInt32	|i32		|
-|ViUInt16	|u16		|
-|ViInt16	|i16		|
-|ViUInt8	|u8			|
-|ViInt8		|i8			|
-|ViChar		|c_char		|
-|ViByte		|u8			|
-|ViAddr		|*c_void	|
-|ViReal32	|f32		|
-|ViReal64	|f64		|
-|ViBuf		|u8			|
-|ViString	|*c_char	|
-|ViRsrc		|*c_char	|
-|ViBoolean	|u16		|
-|ViStatus	|i32		|
-|ViVersion	|u32		|
-|ViObject	|u32		|
-|ViSession	|u32		|
-|ViAttr		|u32		|
+|`ViUInt64`	|`u64`		|
+|`ViInt64`	|`i64`		|
+|`ViUInt32`	|`u32`		|
+|`ViInt32`	|`i32`		|
+|`ViUInt16`	|`u16`		|
+|`ViInt16`	|`i16`		|
+|`ViUInt8`	|`u8`		|
+|`ViInt8`	|`i8`		|
+|`ViChar`	|`c\_char`	|
+|`ViByte`	|`u8`		|
+|`ViAddr`	|`\*c\_void`|
+|`ViReal32`	|`f32`		|
+|`ViReal64`	|`f64`		|
+|`ViBuf`	|`u8`		|
+|`ViString`	|`\*c\_char`|
+|`ViRsrc`	|`\*c\_char`|
+|`ViBoolean`|`u16`		|
+|`ViStatus`	|`i32`		|
+|`ViVersion`|`u32`		|
+|`ViObject`	|`u32`		|
+|`ViSession`|`u32`		|
+|`ViAttr`	|`u32`		|
