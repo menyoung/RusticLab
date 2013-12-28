@@ -41,17 +41,34 @@ I didn't define new types. Here is the type correspondence:
 |`ViInt16`	|`i16`		|
 |`ViUInt8`	|`u8`		|
 |`ViInt8`	|`i8`		|
-|`ViChar`	|`c\_char`	|
+|`ViChar`	|`c_char`	|
 |`ViByte`	|`u8`		|
-|`ViAddr`	|`\*c\_void`|
+|`ViAddr`	|`*c_void`	|
 |`ViReal32`	|`f32`		|
 |`ViReal64`	|`f64`		|
 |`ViBuf`	|`u8`		|
-|`ViString`	|`\*c\_char`|
-|`ViRsrc`	|`\*c\_char`|
+|`ViString`	|`*c_char`	|
+|`ViRsrc`	|`*c_char`	|
 |`ViBoolean`|`u16`		|
 |`ViStatus`	|`i32`		|
 |`ViVersion`|`u32`		|
 |`ViObject`	|`u32`		|
 |`ViSession`|`u32`		|
 |`ViAttr`	|`u32`		|
+|`ViEvent`	|`u32`		|
+|`ViFindList`	|`u32`	|
+|`ViBusAddress`	|`uint`	|
+|`ViBusSize`	|`uint`	|
+|`ViAttrState`	|`uint`	|
+|`ViBusAddress64`|`u64`	|
+|`ViEventType`	|`u32`	|
+|`ViKeyId`	|`*c_char`	|
+|`ViJobId`	|`u32`		|
+|`ViAccessMode`	|`u32`	|
+|`ViEventFilter`|`u32`	|
+|`ViVAList`		|????	|
+
+I don't understand the function typedef for event handling yet.
+```
+typedef ViStatus (* ViHndlr) (ViSession vi, ViEventType eventType, ViEvent event, ViAddr userHandle);
+```
