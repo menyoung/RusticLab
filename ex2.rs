@@ -1,5 +1,5 @@
 // use std::libc::{c_int, size_t};
-mod visa;
+mod visatype;
 
 #[link_args = "-framework VISA"]
 extern {
