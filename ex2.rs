@@ -62,7 +62,7 @@ fn main() {
 	let buffer: ~[u8] = std::vec::from_elem(MAX_CNT as uint, 0u8);
 	unsafe { viRead(instr, std::vec::raw::to_ptr(buffer), MAX_CNT, &mut retCount) };
 	println(buffer.slice(0,retCount as uint).to_ascii().to_str_ascii());
-	println(fmt!("%d",VI_SPEC_VERSION as int));
+	println(fmt!("VI Version %d.%d.%d", VI_VERSION_MAJOR(VI_SPEC_VERSION) as int, VI_VERSION_MINOR(VI_SPEC_VERSION) as int, VI_VERSION_SUBMINOR(VI_SPEC_VERSION) as int));
 
 	unsafe { viClose(instr) };
 	unsafe { viClose(defaultRM) };

@@ -41,3 +41,4 @@ struct ViJobId(u32);
 struct ViAccessMode(u32);
 struct ViEventFilter(u32);
 // struct ViVAList(????);
+// C functions with variable arguments not supported in 0.8 (but in 0.9pre).

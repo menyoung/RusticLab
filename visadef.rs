@@ -176,10 +176,10 @@ pub static VI_ATTR_PXI_RECV_INTR_DATA           : u32 = 0x3FFF4241u32;
 
 /*- Attributes (platform dependent size)------------------------------------*/
 
-/* #if defined(_VI_INT64_UINT64_DEFINED) && defined(_VISA_ENV_IS_64_BIT)
-pub static VI_ATTR_USER_DATA_64                  = 0x3FFF000Au32;
-pub static VI_ATTR_RET_COUNT_64                  = 0x3FFF4028u32;
-pub static VI_ATTR_USER_DATA                     = VI_ATTR_USER_DATA_64;
+// #if defined(_VI_INT64_UINT64_DEFINED) && defined(_VISA_ENV_IS_64_BIT)
+pub static VI_ATTR_USER_DATA_64                 : u32 = 0x3FFF000Au32;
+pub static VI_ATTR_RET_COUNT_64                 : u32 = 0x3FFF4028u32;
+/* pub static VI_ATTR_USER_DATA                     = VI_ATTR_USER_DATA_64;
 pub static VI_ATTR_RET_COUNT                     = VI_ATTR_RET_COUNT_64;
 #else */
 pub static VI_ATTR_USER_DATA                    : u32 = VI_ATTR_USER_DATA_32;
@@ -354,11 +354,21 @@ pub static VI_ERROR_NPERMISSION       : i32 = _VI_ERROR+0x3FFF00A8i32; /* BFFF00
 
 /*- Other VISA Definitions --------------------------------------------------*/
 
+// not as fast, but turned macros into functions.
 /*
 pub static VI_VERSION_MAJOR(ver)       = (((ViVersion)ver) & 0xFFF00000u32) >> 20;
 pub static VI_VERSION_MINOR(ver)       = (((ViVersion)ver) & 0x000FFF00u32) >>  8;
 pub static VI_VERSION_SUBMINOR(ver)    = (((ViVersion)ver) & 0x000000FFu32);
 */
+pub fn VI_VERSION_MAJOR(ver: u32) -> u32 {
+	(ver & 0xFFF00000u32) >> 20
+}
+pub fn VI_VERSION_MINOR(ver: u32) -> u32 {
+	(ver & 0x000FFF00u32) >> 8
+}
+pub fn VI_VERSION_SUBMINOR(ver: u32) -> u32 {
+	(ver & 0x000000FFu32)
+}
 pub static VI_FIND_BUFLEN             : i32 = 256;
 
 pub static VI_INTF_GPIB               : i32 = 1;
@@ -592,6 +602,7 @@ pub static VI_PXI_STAR_TRIG_CONTROLLER: i32 = 1413;
 /*- Backward Compatibility Macros -------------------------------------------*/
 
 // pub static viGetDefaultRM(vi)          viOpenDefaultRM(vi);
+// the rename should be exported wherever viOpenDefaultRM is ported.
 pub static VI_ERROR_INV_SESSION       : i32 = VI_ERROR_INV_OBJECT;
 pub static VI_INFINITE                : u32 = VI_TMO_INFINITE;
 pub static VI_NORMAL                  : i32 = VI_PROT_NORMAL;
