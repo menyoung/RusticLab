@@ -1,8 +1,10 @@
 // use std::libc::{c_int, size_t};
 use visatype::*;
 use visadef::*;
-mod visatype;
+use visafn::*;
+mod visafn;
 mod visadef;
+mod visatype;
 
 #[link_args = "-framework VISA"]
 extern {
