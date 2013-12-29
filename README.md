@@ -29,7 +29,6 @@ rustc --target i686-apple-darwin ex1.rs
 
 VI types
 --------
-I didn't define new types. Here is the type correspondence:
 
 |VI type	|Rust type	|
 |-----------|-----------|
@@ -57,12 +56,12 @@ I didn't define new types. Here is the type correspondence:
 |`ViAttr`	|`u32`		|
 |`ViEvent`	|`u32`		|
 |`ViFindList`	|`u32`	|
-|`ViBusAddress`	|`uint`	|
-|`ViBusSize`	|`uint`	|
-|`ViAttrState`	|`uint`	|
+|`ViBusAddress`	|`u32`	|
+|`ViBusSize`	|`u32`	|
+|`ViAttrState`	|`u32`	|
 |`ViBusAddress64`|`u64`	|
 |`ViEventType`	|`u32`	|
-|`ViKeyId`	|`~c_char`	|
+|`ViKeyId`	|`~c_char`_	|
 |`ViJobId`	|`u32`		|
 |`ViAccessMode`	|`u32`	|
 |`ViEventFilter`|`u32`	|
@@ -72,3 +71,5 @@ I don't understand the function typedef for event handling yet.
 ```
 typedef ViStatus (* ViHndlr) (ViSession vi, ViEventType eventType, ViEvent event, ViAddr userHandle);
 ```
+
+Currently implemented only as 32bit system, and without function calling conventions directives.
