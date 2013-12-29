@@ -1,7 +1,4 @@
-use visadef::*;
-use visatype::*;
-mod visadef;
-mod visatype;
+use std::libc::c_char;
 
 // fn main() { }
 
@@ -9,8 +6,10 @@ mod visatype;
 // They're slowly being ported on an as-needed basis.
 // 
 /*- Resource Manager Functions and Operations -------------------------------*/
-// 
+#[link_args= "-framework VISA"]
+extern {
 // ViStatus _VI_FUNC  viOpenDefaultRM (ViPSession vi);
+	fn viOpenDefaultRM(vi: *mut u32) -> i32;
 // ViStatus _VI_FUNC  viFindRsrc      (ViSession sesn, ViString expr, ViPFindList vi,
 //                                     ViPUInt32 retCnt, ViChar _VI_FAR desc[]);
 // ViStatus _VI_FUNC  viFindNext      (ViFindList vi, ViChar _VI_FAR desc[]);
@@ -22,11 +21,17 @@ mod visatype;
 //                                     ViChar _VI_FAR aliasIfExists[]);
 // ViStatus _VI_FUNC  viOpen          (ViSession sesn, ViRsrc name, ViAccessMode mode,
 //                                     ViUInt32 timeout, ViPSession vi);
-// 
+	fn viOpen(sesn: u32, name: *c_char, mode: u32,
+			  timeout: u32, vi: *mut u32) -> i32;
+}
+
 /*- Resource Template Operations --------------------------------------------*/
-// 
+#[link_args= "-framework VISA"]
+extern {
 // ViStatus _VI_FUNC  viClose         (ViObject vi);
+	fn viClose(vi: u32) -> i32;
 // ViStatus _VI_FUNC  viSetAttribute  (ViObject vi, ViAttr attrName, ViAttrState attrValue);
+	fn viSetAttribute(vi: u32, attrName: u32, attrValue: u32) -> i32;
 // ViStatus _VI_FUNC  viGetAttribute  (ViObject vi, ViAttr attrName, void _VI_PTR attrValue);
 // ViStatus _VI_FUNC  viStatusDesc    (ViObject vi, ViStatus status, ViChar _VI_FAR desc[]);
 // ViStatus _VI_FUNC  viTerminate     (ViObject vi, ViUInt16 degree, ViJobId jobId);
@@ -44,21 +49,25 @@ mod visatype;
 //                                     ViAddr userHandle);
 // ViStatus _VI_FUNC  viUninstallHandler(ViSession vi, ViEventType eventType, ViHndlr handler,
 //                                       ViAddr userHandle);
-// 
+}
+
 /*- Basic I/O Operations ----------------------------------------------------*/
-// 
+#[link_args= "-framework VISA"]
+extern {
 // ViStatus _VI_FUNC  viRead          (ViSession vi, ViPBuf buf, ViUInt32 cnt, ViPUInt32 retCnt);
+	fn viRead(vi: u32, buf: *u8, cnt: u32, retCnt: *mut u32) -> i32;
 // ViStatus _VI_FUNC  viReadAsync     (ViSession vi, ViPBuf buf, ViUInt32 cnt, ViPJobId  jobId);
 // ViStatus _VI_FUNC  viReadToFile    (ViSession vi, ViConstString filename, ViUInt32 cnt,
 //                                     ViPUInt32 retCnt);
 // ViStatus _VI_FUNC  viWrite         (ViSession vi, ViBuf  buf, ViUInt32 cnt, ViPUInt32 retCnt);
+	fn viWrite(vi: u32, buf: *u8, cnt: u32, retCnt: *mut u32) -> i32;
 // ViStatus _VI_FUNC  viWriteAsync    (ViSession vi, ViBuf  buf, ViUInt32 cnt, ViPJobId  jobId);
 // ViStatus _VI_FUNC  viWriteFromFile (ViSession vi, ViConstString filename, ViUInt32 cnt,
 //                                     ViPUInt32 retCnt);
 // ViStatus _VI_FUNC  viAssertTrigger (ViSession vi, ViUInt16 protocol);
 // ViStatus _VI_FUNC  viReadSTB       (ViSession vi, ViPUInt16 status);
 // ViStatus _VI_FUNC  viClear         (ViSession vi);
-// 
+} 
 /*- Formatted and Buffered I/O Operations -----------------------------------*/
 // 
 // ViStatus _VI_FUNC  viSetBuf        (ViSession vi, ViUInt16 mask, ViUInt32 size);
