@@ -1,4 +1,5 @@
 // use std::libc::{c_int, size_t};
+use visatype::*;
 mod visatype;
 
 #[link_args = "-framework VISA"]
@@ -26,8 +27,6 @@ struct ViBuf(*u8);
 // #[nolink]
 fn main() {
 	// constants. not mutable!
-	let VI_SUCCESS: i32 = 0;
-	let VI_NULL: u32 = 0;
 	let VI_ATTR_TMO_VALUE = 0x3FFF001Au32;
 	
 	println ("Hello.");
@@ -47,7 +46,7 @@ fn main() {
 	let name = "GPIB0::12::INSTR";
 	println(name);
 	let c_name = name.to_c_str(); // TODO: learn pointers and strings.
-	x = unsafe { viOpen(defaultRM, c_name.unwrap(), VI_NULL, VI_NULL, &mut instr) };
+	x = unsafe { viOpen(defaultRM, c_name.unwrap(), 0, 0, &mut instr) };
 	println(fmt!("VI at address 12 is %d; Status = %d.", instr as int, x as int));
 	
 	// set the timeout for messages
@@ -64,7 +63,8 @@ fn main() {
 	let buffer: ~[u8] = std::vec::from_elem(MAX_CNT as uint, 0u8);
 	unsafe { viRead(instr, std::vec::raw::to_ptr(buffer), MAX_CNT, &mut retCount) };
 	println(buffer.slice(0,retCount as uint).to_ascii().to_str_ascii());
-	
+	println(fmt!("%d",VI_SPEC_VERSION as int));
+
 	unsafe { viClose(instr) };
 	unsafe { viClose(defaultRM) };
 }
