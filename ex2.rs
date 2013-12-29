@@ -1,6 +1,8 @@
 // use std::libc::{c_int, size_t};
 use visatype::*;
+use visadef::*;
 mod visatype;
+mod visadef;
 
 #[link_args = "-framework VISA"]
 extern {
@@ -26,9 +28,6 @@ struct ViBuf(*u8);
 #[fixed_stack_segment]
 // #[nolink]
 fn main() {
-	// constants. not mutable!
-	let VI_ATTR_TMO_VALUE = 0x3FFF001Au32;
-	
 	println ("Hello.");
 	let mut defaultRM: u32 = 25813;
 	
