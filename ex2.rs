@@ -1,5 +1,5 @@
 // use std::libc::{c_int, size_t};
-mod visatype;
+mod visa;
 
 #[link_args = "-framework VISA"]
 extern {
@@ -47,7 +47,7 @@ fn main() {
 	let name = "GPIB0::12::INSTR";
 	println(name);
 	let c_name = name.to_c_str(); // TODO: learn pointers and strings.
-	let mut x = unsafe { viOpen(defaultRM, c_name.unwrap(), VI_NULL, VI_NULL, &mut instr) };
+	x = unsafe { viOpen(defaultRM, c_name.unwrap(), VI_NULL, VI_NULL, &mut instr) };
 	println(fmt!("VI at address 12 is %d; Status = %d.", instr as int, x as int));
 	
 	// set the timeout for messages

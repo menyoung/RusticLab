@@ -43,12 +43,12 @@ I didn't define new types. Here is the type correspondence:
 |`ViInt8`	|`i8`		|
 |`ViChar`	|`c_char`	|
 |`ViByte`	|`u8`		|
-|`ViAddr`	|`*c_void`	|
+|`ViAddr`	|`~c_void`	|
 |`ViReal32`	|`f32`		|
 |`ViReal64`	|`f64`		|
 |`ViBuf`	|`u8`		|
-|`ViString`	|`*c_char`	|
-|`ViRsrc`	|`*c_char`	|
+|`ViString`	|`~c_char`	|
+|`ViRsrc`	|`~c_char`	|
 |`ViBoolean`|`u16`		|
 |`ViStatus`	|`i32`		|
 |`ViVersion`|`u32`		|
@@ -62,7 +62,7 @@ I didn't define new types. Here is the type correspondence:
 |`ViAttrState`	|`uint`	|
 |`ViBusAddress64`|`u64`	|
 |`ViEventType`	|`u32`	|
-|`ViKeyId`	|`*c_char`	|
+|`ViKeyId`	|`~c_char`	|
 |`ViJobId`	|`u32`		|
 |`ViAccessMode`	|`u32`	|
 |`ViEventFilter`|`u32`	|

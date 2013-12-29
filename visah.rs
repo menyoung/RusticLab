@@ -3,7 +3,7 @@ use std::libc::c_char;
 /*- Resource Manager Functions and Operations -------------------------------*/
 
 fn viOpenDefaultRM (vi: *mut u32) -> i32;
-fn viFindRsrc      (u32 sesn, ViString expr, ViPFindList vi,
+fn viFindRsrc      (u32 sesn: u32, ViString expr, ViPFindList vi,
                                     ViPUInt32 retCnt, ViChar  desc[]) -> i32;
 fn viFindNext      (ViFindList vi, ViChar  desc[]) -> i32;
 fn viParseRsrc     (u32 rmSesn, ViRsrc rsrcName,
