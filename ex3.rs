@@ -1,11 +1,9 @@
-// use std::libc::{c_int, size_t};
 use visatype::*;
 use visadef::*;
-use visafn::*;
-mod visa;
-mod visafn;
-mod visadef;
 mod visatype;
+mod visadef;
+mod visafn;
+mod visa;
 
 #[fixed_stack_segment]
 fn main() {
@@ -27,7 +25,7 @@ fn main() {
 	// open communication with gpib device at primary address 12.
 	// no error checking!
 	let mut instr: ViSession = ViSession(25814);
-	match visa::open(defaultRM, "GPIB0::12::INSTR", ViAccessMode(0), ViUInt32(0)) {
+	match visa::open(defaultRM, "GPIB0::12::INSTR", ViAccessMode(0), 0) {
 		(status, vi) => {
 			*instr = *vi;
 			println(fmt!("Instrument at address 12 is %d; Status = %d.", *instr as int, *status as int));
@@ -39,20 +37,39 @@ fn main() {
 	}
 	
 	// set the timeout for messages
-	unsafe { viSetAttribute(*instr, VI_ATTR_TMO_VALUE, 5000) as u64};
+	visa::set_attribute(ViObject(*instr), ViAttr(VI_ATTR_TMO_VALUE), ViAttrState(5000));
 	
 	// ask the device for identification
-	let mut retCount: u32 = 25815;
-	let message = "*IDN?\n";
-	let c_message = message.to_c_str();
-	unsafe { viWrite(*instr, c_message.unwrap() as *u8, 6, &mut retCount) }; 
+	match visa::write_str(instr, "*IDN?\n") {
+		(status, retCnt) => {
+			println(fmt!("Upon write operation, RetCount = %u; Status = %d.", retCnt, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error writing to instrument; exit.
+				return;
+			}
+		}
+	}
 	
 	// read the response
-	let MAX_CNT: u32 = 200;
-	let buffer: ~[u8] = std::vec::from_elem(MAX_CNT as uint, 0u8);
-	unsafe { viRead(*instr, std::vec::raw::to_ptr(buffer), MAX_CNT, &mut retCount) };
-	println(buffer.slice(0,retCount as uint).to_ascii().to_str_ascii());
+	let MAX_CNT = 200;
+	match visa::read_str(instr, MAX_CNT) {
+		(status, msg, retCnt) => {
+			println(msg);
+			println(fmt!("That was %u bytes; Status = %d.", retCnt, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error reading from instrument; exit.
+				return;
+			}
+		}
+	}
 
-	unsafe { viClose(*instr) };
-	unsafe { viClose(*defaultRM) };
+	visa::write_str(instr, "*TST?");
+	match visa::read_str(instr, MAX_CNT) {
+		(status, msg, retCnt) => {
+			println(msg);
+		}
+	}
+
+	visa::close(instr);
+	visa::close(defaultRM);
 }
