@@ -1,5 +1,7 @@
 RusticLab
 =========
+<img src="http://leiningen.org/img/leiningen.jpg"
+ alt="Leiningen logo" title="The man himself" align="right" />
 
 https://github.com/menyoung/RusticLab
 
