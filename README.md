@@ -3,9 +3,35 @@ RusticLab
 
 https://github.com/menyoung/RusticLab
 
-```
+Here's ex.3:
+
+```rust
+#[feature(globs)];
+
+extern mod visa;
+
+use visa::*;
+
+fn main() {
+	println(format!("Hello. VISA Version is {}.{}.{}.", VI_VERSION_MAJOR(VI_SPEC_VERSION) as int, VI_VERSION_MINOR(VI_SPEC_VERSION) as int, VI_VERSION_SUBMINOR(VI_SPEC_VERSION) as int));
+	
+	// initialize the system.
+	let mut defaultRM: ViSession = ViSession(25813);
+	match vi_open_default_RM() {
+		(status, resource_manager) => {
+			*defaultRM = *resource_manager;
+			println(format!("Default Resource Manager is {}; Status = {}.", *defaultRM as int, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error initializing; exit.
+				return;
+			}
+		}
+	}
+	
+	// open communication with gpib device at primary address 12.
+	// no error checking!
 	let mut instr: ViSession = ViSession(25814);
-	match visa::open(defaultRM, "GPIB0::12::INSTR", ViAccessMode(0), 0) {
+	match vi_open(defaultRM, "GPIB0::12::INSTR", ViAccessMode(0), 0) {
 		(status, vi) => {
 			*instr = *vi;
 			println(format!("Instrument at address 12 is {}; Status = {}.", *instr as int, *status as int));
@@ -17,12 +43,12 @@ https://github.com/menyoung/RusticLab
 	}
 	
 	// set the timeout for messages
-	visa::set_attribute(ViObject(*instr), ViAttr(VI_ATTR_TMO_VALUE), ViAttrState(5000));
+	vi_set_attribute(ViObject(*instr), ViAttr(VI_ATTR_TMO_VALUE), ViAttrState(5000));
 	// clear the instrument
-	visa::clear(instr);
-	
+	vi_clear(instr);
+
 	// ask the device for identification
-	match visa::write_str(instr, "*IDN?\n") {
+	match vi_write_str(instr, "*IDN?\n") {
 		(status, retCnt) => {
 			println(format!("Upon write operation, RetCount = {}; Status = {}.", retCnt, *status as int));
 			if (*status < VI_SUCCESS) {
@@ -34,7 +60,7 @@ https://github.com/menyoung/RusticLab
 	
 	// read the response
 	let MAX_CNT = 200;
-	match visa::read_str(instr, MAX_CNT) {
+	match vi_read_str(instr, MAX_CNT) {
 		(status, msg, retCnt) => {
 			println(msg);
 			println(format!("Message was {} bytes long. Status = {}.", retCnt, *status as int));
@@ -45,8 +71,8 @@ https://github.com/menyoung/RusticLab
 		}
 	}
 
-	visa::write_str(instr, "MEAS:VOLT:DC?");
-	match visa::read_str(instr, MAX_CNT) {
+	vi_write_str(instr, "MEAS:VOLT:DC?");
+	match vi_read_str(instr, MAX_CNT) {
 		(status, msg, retCnt) => {
 			println(msg);
 			println(format!("Message was {} bytes long. Status = {}.", retCnt, *status as int));
@@ -56,17 +82,29 @@ https://github.com/menyoung/RusticLab
 			}
 		}
 	}
+
+	vi_close(instr);
+	vi_close(defaultRM);
+}
 ```
 
-run with Agilent 34401A set to address 12 and connected to GPIB board outputs
+Compile:
+```bash
+rustc --target i686-apple-darwin visa.rs
+rustc --target i686-apple-darwin ex3.rs -L.
+```
+
+running `./ex3` on my Mac with the NI-VISA 5.4 framework installed, with Agilent 34401A set to address 12 and connected to GPIB board outputs
 
 ```
-Instrument at address 12 is 2033994752; Status = 0.
+Hello. VISA Version is 5.1.0.
+Default Resource Manager is 2054567984; Status = 0.
+Instrument at address 12 is 2067133952; Status = 0.
 Upon write operation, RetCount = 6; Status = 0.
 HEWLETT-PACKARD,34401A,0,3-1-1
 
 Message was 31 bytes long. Status = 0.
--7.65800000E-06
++1.60750000E-05
 
 Message was 16 bytes long. Status = 0.
 ```
