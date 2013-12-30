@@ -24,6 +24,7 @@ extern {
 	pub fn viOpen(sesn: u32, name: *c_char, mode: u32,
 			  timeout: u32, vi: *mut u32) -> i32;
 }
+pub unsafe fn viGetDefaultRM(vi: *mut u32) -> i32 { viOpenDefaultRM(vi) }
 
 /*- Resource Template Operations --------------------------------------------*/
 #[link(name = "VISA", kind = "framework")]

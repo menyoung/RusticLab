@@ -124,15 +124,14 @@ On my system it was
 ./configure --target=x86_64-apple-darwin,i686-apple-darwin
 ```
 
-compile to the right target arch!
-```
-rustc --target i686-apple-darwin ex1.rs
-```
-
 VI types
 --------
 
-|VI type	|Rust type	|
+Various VI types translate to equivalent machine types ("typedef" in the header file). The appropriate types are defined via `struct ViStatus(i32)` and can be appropriately constructed whenever an argument of the special type needs to be passed. 
+
+The wrapper functions have been written to use these VISA types for items which are "VISA stuff" but not for data, like byte/character strings.
+
+|VISA type	|Rust type	|
 |-----------|-----------|
 |`ViUInt64`	|`u64`		|
 |`ViInt64`	|`i64`		|
@@ -169,12 +168,12 @@ VI types
 |`ViEventFilter`|`u32`	|
 |`ViVAList`		|????	|
 
-I don't understand the function typedef for event handling yet.
+There is no event handling implemented at the moment, so the below function type isn't ported.
 ```
 typedef ViStatus (* ViHndlr) (ViSession vi, ViEventType eventType, ViEvent event, ViAddr userHandle);
 ```
 
-Currently implemented only as 32bit system, and without function calling conventions directives.
+Currently implemented only as 32bit system (i.e., all the type definitions I made for the 32-bit sizes), and no function calling convention directives have been set (this has to be changed for Windows?).
 
 All rights reserved, for now as long as repo is private.
 
