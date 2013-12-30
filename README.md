@@ -3,9 +3,73 @@ RusticLab
 
 https://github.com/menyoung/RusticLab
 
-All rights reserved, for now as long as repo is private.
+```
+	let mut instr: ViSession = ViSession(25814);
+	match visa::open(defaultRM, "GPIB0::12::INSTR", ViAccessMode(0), 0) {
+		(status, vi) => {
+			*instr = *vi;
+			println(format!("Instrument at address 12 is {}; Status = {}.", *instr as int, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error opening instrument; exit.
+				return;
+			}
+		}
+	}
+	
+	// set the timeout for messages
+	visa::set_attribute(ViObject(*instr), ViAttr(VI_ATTR_TMO_VALUE), ViAttrState(5000));
+	// clear the instrument
+	visa::clear(instr);
+	
+	// ask the device for identification
+	match visa::write_str(instr, "*IDN?\n") {
+		(status, retCnt) => {
+			println(format!("Upon write operation, RetCount = {}; Status = {}.", retCnt, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error writing to instrument; exit.
+				return;
+			}
+		}
+	}
+	
+	// read the response
+	let MAX_CNT = 200;
+	match visa::read_str(instr, MAX_CNT) {
+		(status, msg, retCnt) => {
+			println(msg);
+			println(format!("Message was {} bytes long. Status = {}.", retCnt, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error reading from instrument; exit.
+				return;
+			}
+		}
+	}
 
--Menyoung.
+	visa::write_str(instr, "MEAS:VOLT:DC?");
+	match visa::read_str(instr, MAX_CNT) {
+		(status, msg, retCnt) => {
+			println(msg);
+			println(format!("Message was {} bytes long. Status = {}.", retCnt, *status as int));
+			if (*status < VI_SUCCESS) {
+				// error reading from instrument; exit.
+				return;
+			}
+		}
+	}
+```
+
+run with Agilent 34401A set to address 12 and connected to GPIB board outputs
+
+```
+Instrument at address 12 is 2033994752; Status = 0.
+Upon write operation, RetCount = 6; Status = 0.
+HEWLETT-PACKARD,34401A,0,3-1-1
+
+Message was 31 bytes long. Status = 0.
+-7.65800000E-06
+
+Message was 16 bytes long. Status = 0.
+```
 
 Rust 0.9pre instructions
 ---------------------
@@ -73,3 +137,8 @@ typedef ViStatus (* ViHndlr) (ViSession vi, ViEventType eventType, ViEvent event
 ```
 
 Currently implemented only as 32bit system, and without function calling conventions directives.
+
+All rights reserved, for now as long as repo is private.
+
+-Menyoung.
+
