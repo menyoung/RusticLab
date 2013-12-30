@@ -1,7 +1,5 @@
 RusticLab
 =========
-<img src="http://upload.wikimedia.org/wikipedia/en/6/6a/Krusty_Krab.jpg"
- alt="Leiningen logo" title="The man himself" align="right" />
 
 https://github.com/menyoung/RusticLab
 
