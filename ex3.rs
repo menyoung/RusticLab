@@ -1,4 +1,5 @@
 #[feature(globs)];
+#[allow(dead_code)];
 use visatype::*;
 use visadef::*;
 mod visatype;

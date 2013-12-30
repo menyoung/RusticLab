@@ -1,4 +1,3 @@
-#[feature(globs)];
 use visatype::*;
 use visadef::*;
 use visafn::*;
@@ -30,9 +29,7 @@ pub fn write(vi: ViSession, buf: &[u8]) -> (ViStatus, uint) {
 	(status, retCnt as uint)
 }
 pub fn write_str(vi: ViSession, buf: &str) -> (ViStatus, uint) {
-	let c_str_buf = buf.to_c_str();
-	let c_buf = c_str_buf.as_bytes();
-	write(vi, c_buf.slice_to(c_buf.iter().len()-1))
+	write(vi, buf.as_bytes())
 }
 pub fn read(vi: ViSession, cnt: uint) -> (ViStatus, ~[u8], uint) {
 	let mut status: ViStatus = ViStatus(_VI_ERROR);
