@@ -124,10 +124,10 @@ On my system it was
 ./configure --target=x86_64-apple-darwin,i686-apple-darwin
 ```
 
-VI types
---------
+VISA types
+----------
 
-Various VI types translate to equivalent machine types ("typedef" in the header file). The appropriate types are defined via `struct ViStatus(i32)` and can be appropriately constructed whenever an argument of the special type needs to be passed. 
+Various VISA types translate to equivalent machine types ("typedef" in the header file). In this Rust package, the appropriate types are defined via `struct ViStatus(i32)` and can be appropriately constructed whenever an argument of the special type needs to be passed. 
 
 The wrapper functions have been written to use these VISA types for items which are "VISA stuff" but not for data, like byte/character strings.
 
@@ -162,7 +162,7 @@ The wrapper functions have been written to use these VISA types for items which 
 |`ViAttrState`	|`u32`	|
 |`ViBusAddress64`|`u64`	|
 |`ViEventType`	|`u32`	|
-|`ViKeyId`	|`~c_char`_	|
+|`ViKeyId`	|`~c_char`	|
 |`ViJobId`	|`u32`		|
 |`ViAccessMode`	|`u32`	|
 |`ViEventFilter`|`u32`	|
