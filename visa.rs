@@ -66,7 +66,7 @@ pub fn vi_read_str(vi: ViSession, cnt: uint) -> (ViStatus, ~str, uint) {
 	}
 }
 pub fn vi_close(ViSession(vi): ViSession) -> ViStatus {
-	let mut status: i32; // ViStatus = ViStatus(_VI_ERROR);
+	let mut status: i32;
 	unsafe { status = viClose(vi); }
 	ViStatus(status)
 }
