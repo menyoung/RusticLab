@@ -13,29 +13,50 @@
 extern mod visa;
 
 use visa::*;
+use std::hashmap::{HashMap, HashSet};
 
 pub trait Instrument {
-	fn setup(&self, chan: &str);
-	fn source(&self, chan: &str, val: f64);
-	fn measure(&self, chan: &str) -> f64;
+	fn vi(&self) -> ViSession;
+	fn init(&self);
+	fn setup(&self);
+	fn source(&self, chan: HashMap<&str,f64>);
+	fn measure(&self, chan: HashSet<&str>) -> HashMap<&str,f64>;
 }
 
 pub trait Buffered : Instrument {
 	fn trigger(&self);
-	fn query(&self, chan: &str) -> ~[f64];
+	fn readout(&self, chan: &str) -> ~[f64];
 }
 
-pub struct Keithley;
+pub struct Keithley {
+	vi: ViSession
+}
 
 impl Instrument for Keithley {
-	fn setup(&self, chan: &str) {
-		println!("{}", chan);
+	fn vi(&self) -> ViSession {
+		ViSession(0)
 	}
-	fn source(&self, chan: &str, val: f64) {
-		println!("{}: {}", chan, val);
+	fn init(&self) {
+		return;
 	}
-	fn measure(&self, chan: &str) -> f64 {
+	fn setup(&self) {
+		return;
+	}
+	fn source(&self, chan: HashMap<&str,f64>) {
+		println!("{}", chan.to_str());
+	}
+	fn measure(&self, chan: HashSet<&str>) -> HashMap<&str,f64> {
+		println!("{}", chan.to_str());
+		HashMap::new()
+	}
+}
+
+impl Buffered for Keithley {
+	fn trigger(&self) {
+		return;
+	}
+	fn readout(&self, chan: &str) -> ~[f64] {
 		println!("{}", chan);
-		0.0
+		~[0.0]
 	}
 }
