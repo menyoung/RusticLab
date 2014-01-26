@@ -1,6 +1,6 @@
 // VISA special codes definitions
 
-pub static _VI_ERROR: i32 = 0x80000000;
+pub static _VI_ERROR: i32 = -0x80000000; // most negative integer, right?
 pub static VI_SUCCESS: i32 = 0;
 pub static VI_NULL: i32 = 0;
 pub static VI_TRUE: i32 = 1;

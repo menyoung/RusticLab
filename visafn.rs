@@ -1,7 +1,5 @@
 use std::libc::c_char;
 
-// fn main() { }
-
 // VISA functions
 // They're slowly being ported on an as-needed basis.
 // 
@@ -21,9 +19,9 @@ extern {
 //                                     ViChar _VI_FAR aliasIfExists[]);
 // ViStatus _VI_FUNC  viOpen          (ViSession sesn, ViRsrc name, ViAccessMode mode,
 //                                     ViUInt32 timeout, ViPSession vi);
-	pub fn viOpen(sesn: u32, name: *c_char, mode: u32,
-			  timeout: u32, vi: *mut u32) -> i32;
+	pub fn viOpen(sesn: u32, name: *c_char, mode: u32, timeout: u32, vi: *mut u32) -> i32;
 }
+/// calls `viOpenDefaultRM(vi)`.
 pub unsafe fn viGetDefaultRM(vi: *mut u32) -> i32 { viOpenDefaultRM(vi) }
 
 /*- Resource Template Operations --------------------------------------------*/
@@ -35,6 +33,7 @@ extern {
 	pub fn viSetAttribute(vi: u32, attrName: u32, attrValue: u32) -> i32;
 // ViStatus _VI_FUNC  viGetAttribute  (ViObject vi, ViAttr attrName, void _VI_PTR attrValue);
 // ViStatus _VI_FUNC  viStatusDesc    (ViObject vi, ViStatus status, ViChar _VI_FAR desc[]);
+	pub fn viStatusDesc(vi: u32, status: i32, desc: *u8) -> i32;
 // ViStatus _VI_FUNC  viTerminate     (ViObject vi, ViUInt16 degree, ViJobId jobId);
 // 
 // ViStatus _VI_FUNC  viLock          (ViSession vi, ViAccessMode lockType, ViUInt32 timeout,
