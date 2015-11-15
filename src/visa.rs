@@ -5,8 +5,8 @@
 //!
 //! Compile: `rustc --target i686-apple-darwin visa.rs`
 
-#[feature(globs)];
-#[allow(dead_code)];
+#[feature(globs)]
+#[allow(dead_code)]
 
 pub use visadef::*;
 pub use visafn::*;
