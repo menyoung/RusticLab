@@ -1,4 +1,4 @@
-use std::libc::{c_char, c_void};
+use libc::{c_char, c_void};
 
 // from visatype.h
 type ViUInt64 = u64;

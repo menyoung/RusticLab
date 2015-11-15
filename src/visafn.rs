@@ -1,4 +1,4 @@
-use std::libc::c_char;
+use libc::c_char;
 
 // VISA functions
 // They're slowly being ported on an as-needed basis.
