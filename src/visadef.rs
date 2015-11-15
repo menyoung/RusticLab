@@ -185,55 +185,65 @@ pub const VI_ATTR_PXI_RECV_INTR_DATA           : u32 = 0x3FFF4241;
 /*- Attributes (platform dependent size)------------------------------------*/
 
 // #if defined(_VI_INT64_UINT64_DEFINED) && defined(_VISA_ENV_IS_64_BIT)
-pub const VI_ATTR_USER_DATA_64                 : u32 = 0x3FFF000A;
-pub const VI_ATTR_RET_COUNT_64                 : u32 = 0x3FFF4028;
-/* pub const VI_ATTR_USER_DATA                     = VI_ATTR_USER_DATA_64;
-pub const VI_ATTR_RET_COUNT                     = VI_ATTR_RET_COUNT_64;
-#else */
-pub const VI_ATTR_USER_DATA                    : u32 = VI_ATTR_USER_DATA_32;
-pub const VI_ATTR_RET_COUNT                    : u32 = VI_ATTR_RET_COUNT_32;
+#[cfg(target_pointer_width = "64")] {
+    pub const VI_ATTR_USER_DATA_64                 : u32 = 0x3FFF000A;
+    pub const VI_ATTR_RET_COUNT_64                 : u32 = 0x3FFF4028;
+    pub const VI_ATTR_USER_DATA                     = VI_ATTR_USER_DATA_64;
+    pub const VI_ATTR_RET_COUNT                     = VI_ATTR_RET_COUNT_64;
+}
+// #else
+#[cfg(target_pointer_width = "32")] {
+    pub const VI_ATTR_USER_DATA                    : u32 = VI_ATTR_USER_DATA_32;
+    pub const VI_ATTR_RET_COUNT                    : u32 = VI_ATTR_RET_COUNT_32;
+}
 // #endif
 
 // #if defined(_VI_INT64_UINT64_DEFINED;
-pub const VI_ATTR_WIN_BASE_ADDR_64             : u32 = 0x3FFF009B;
-pub const VI_ATTR_WIN_SIZE_64                  : u32 = 0x3FFF009C;
-pub const VI_ATTR_MEM_BASE_64                  : u32 = 0x3FFF00D0;
-pub const VI_ATTR_MEM_SIZE_64                  : u32 = 0x3FFF00D1;
+#[cfg(target_pointer_width = "64")] {
+    pub const VI_ATTR_WIN_BASE_ADDR_64             : u32 = 0x3FFF009B;
+    pub const VI_ATTR_WIN_SIZE_64                  : u32 = 0x3FFF009C;
+    pub const VI_ATTR_MEM_BASE_64                  : u32 = 0x3FFF00D0;
+    pub const VI_ATTR_MEM_SIZE_64                  : u32 = 0x3FFF00D1;
+}
 /* #endif
-#if defined(_VI_INT64_UINT64_DEFINED) && defined(_VISA_ENV_IS_64_BIT)
-pub const VI_ATTR_WIN_BASE_ADDR                 = VI_ATTR_WIN_BASE_ADDR_64;
-pub const VI_ATTR_WIN_SIZE                      = VI_ATTR_WIN_SIZE_64;
-pub const VI_ATTR_MEM_BASE                      = VI_ATTR_MEM_BASE_64;
-pub const VI_ATTR_MEM_SIZE                      = VI_ATTR_MEM_SIZE_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR0             = VI_ATTR_PXI_MEM_BASE_BAR0_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR1             = VI_ATTR_PXI_MEM_BASE_BAR1_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR2             = VI_ATTR_PXI_MEM_BASE_BAR2_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR3             = VI_ATTR_PXI_MEM_BASE_BAR3_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR4             = VI_ATTR_PXI_MEM_BASE_BAR4_64;
-pub const VI_ATTR_PXI_MEM_BASE_BAR5             = VI_ATTR_PXI_MEM_BASE_BAR5_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR0             = VI_ATTR_PXI_MEM_SIZE_BAR0_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR1             = VI_ATTR_PXI_MEM_SIZE_BAR1_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR2             = VI_ATTR_PXI_MEM_SIZE_BAR2_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR3             = VI_ATTR_PXI_MEM_SIZE_BAR3_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR4             = VI_ATTR_PXI_MEM_SIZE_BAR4_64;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR5             = VI_ATTR_PXI_MEM_SIZE_BAR5_64;
-#else */
-pub const VI_ATTR_WIN_BASE_ADDR                : u32 = VI_ATTR_WIN_BASE_ADDR_32;
-pub const VI_ATTR_WIN_SIZE                     : u32 = VI_ATTR_WIN_SIZE_32;
-pub const VI_ATTR_MEM_BASE                     : u32 = VI_ATTR_MEM_BASE_32;
-pub const VI_ATTR_MEM_SIZE                     : u32 = VI_ATTR_MEM_SIZE_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR0            : u32 = VI_ATTR_PXI_MEM_BASE_BAR0_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR1            : u32 = VI_ATTR_PXI_MEM_BASE_BAR1_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR2            : u32 = VI_ATTR_PXI_MEM_BASE_BAR2_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR3            : u32 = VI_ATTR_PXI_MEM_BASE_BAR3_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR4            : u32 = VI_ATTR_PXI_MEM_BASE_BAR4_32;
-pub const VI_ATTR_PXI_MEM_BASE_BAR5            : u32 = VI_ATTR_PXI_MEM_BASE_BAR5_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR0            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR0_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR1            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR1_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR2            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR2_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR3            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR3_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR4            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR4_32;
-pub const VI_ATTR_PXI_MEM_SIZE_BAR5            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR5_32;
+#if defined(_VI_INT64_UINT64_DEFINED) && defined(_VISA_ENV_IS_64_BIT) */
+#[cfg(target_pointer_width = "64")] {
+    pub const VI_ATTR_WIN_BASE_ADDR                 = VI_ATTR_WIN_BASE_ADDR_64;
+    pub const VI_ATTR_WIN_SIZE                      = VI_ATTR_WIN_SIZE_64;
+    pub const VI_ATTR_MEM_BASE                      = VI_ATTR_MEM_BASE_64;
+    pub const VI_ATTR_MEM_SIZE                      = VI_ATTR_MEM_SIZE_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR0             = VI_ATTR_PXI_MEM_BASE_BAR0_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR1             = VI_ATTR_PXI_MEM_BASE_BAR1_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR2             = VI_ATTR_PXI_MEM_BASE_BAR2_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR3             = VI_ATTR_PXI_MEM_BASE_BAR3_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR4             = VI_ATTR_PXI_MEM_BASE_BAR4_64;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR5             = VI_ATTR_PXI_MEM_BASE_BAR5_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR0             = VI_ATTR_PXI_MEM_SIZE_BAR0_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR1             = VI_ATTR_PXI_MEM_SIZE_BAR1_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR2             = VI_ATTR_PXI_MEM_SIZE_BAR2_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR3             = VI_ATTR_PXI_MEM_SIZE_BAR3_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR4             = VI_ATTR_PXI_MEM_SIZE_BAR4_64;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR5             = VI_ATTR_PXI_MEM_SIZE_BAR5_64;
+}
+// #else
+#[cfg(target_pointer_width = "32")] {
+    pub const VI_ATTR_WIN_BASE_ADDR                : u32 = VI_ATTR_WIN_BASE_ADDR_32;
+    pub const VI_ATTR_WIN_SIZE                     : u32 = VI_ATTR_WIN_SIZE_32;
+    pub const VI_ATTR_MEM_BASE                     : u32 = VI_ATTR_MEM_BASE_32;
+    pub const VI_ATTR_MEM_SIZE                     : u32 = VI_ATTR_MEM_SIZE_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR0            : u32 = VI_ATTR_PXI_MEM_BASE_BAR0_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR1            : u32 = VI_ATTR_PXI_MEM_BASE_BAR1_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR2            : u32 = VI_ATTR_PXI_MEM_BASE_BAR2_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR3            : u32 = VI_ATTR_PXI_MEM_BASE_BAR3_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR4            : u32 = VI_ATTR_PXI_MEM_BASE_BAR4_32;
+    pub const VI_ATTR_PXI_MEM_BASE_BAR5            : u32 = VI_ATTR_PXI_MEM_BASE_BAR5_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR0            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR0_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR1            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR1_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR2            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR2_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR3            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR3_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR4            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR4_32;
+    pub const VI_ATTR_PXI_MEM_SIZE_BAR5            : u32 = VI_ATTR_PXI_MEM_SIZE_BAR5_32;
+}
 // #endif
 
 /*- Event Types -------------------------------------------------------------*/
