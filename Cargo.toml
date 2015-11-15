@@ -1,0 +1,5 @@
+[package]
+
+name = "rusticlab"
+version = "0.0.1"
+authors = [ "Menyoung Lee <menyounglee@gmail.com>" ]

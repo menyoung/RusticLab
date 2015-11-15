@@ -1,11 +1,8 @@
-#[crate_id = "visa#0.1"];
-#[crate_type = "lib"];
-
 //! RusticLab's visa Library
 //!
 //! provides functions that perform VISA operations by making the appropriate C calls through the linked VISA library in the system.
 //! Tested with NI-VISA 5.4 for i686-apple-darwin Mac OS X 10.9.
-//! 
+//!
 //! Compile: `rustc --target i686-apple-darwin visa.rs`
 
 #[feature(globs)];
