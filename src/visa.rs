@@ -5,8 +5,8 @@
 //!
 //! Compile: `rustc --target i686-apple-darwin visa.rs`
 
-#[feature(globs)]
-#[allow(dead_code)]
+//#[feature(globs)]
+//#[allow(dead_code)]
 
 pub use visadef::*;
 pub use visafn::*;
@@ -45,7 +45,7 @@ pub fn vi_write(ViSession(vi): ViSession, buf: &[u8]) -> (ViStatus, uint) {
 pub fn vi_write_str(vi: ViSession, buf: &str) -> (ViStatus, uint) {
 	vi_write(vi, buf.as_bytes())
 }
-pub fn vi_read(ViSession(vi): ViSession, cnt: uint) -> (ViStatus, ~[u8], uint) {
+pub fn vi_read(ViSession(vi): ViSession, cnt: uint) -> (ViStatus, [u8], uint) {
 	let mut status: i32;
 	let mut buf = ::std::vec::with_capacity(cnt);
 	let mut retCnt: u32 = 0;
@@ -55,7 +55,7 @@ pub fn vi_read(ViSession(vi): ViSession, cnt: uint) -> (ViStatus, ~[u8], uint) {
 	}
 	(ViStatus(status), buf, retCnt as uint)
 }
-pub fn vi_read_str(vi: ViSession, cnt: uint) -> (ViStatus, ~str, uint) {
+pub fn vi_read_str(vi: ViSession, cnt: uint) -> (ViStatus, str, uint) {
 	match vi_read(vi, cnt) {
 		(status, buf, retCnt) => {
 			(status, buf.into_ascii().into_str(), retCnt)
@@ -72,13 +72,13 @@ pub fn vi_clear(ViSession(vi): ViSession) -> ViStatus {
 	unsafe { status = viClear(vi); }
 	ViStatus(status)
 }
-pub fn vi_status_desc(ViSession(vi): ViSession, ViStatus(status): ViStatus) -> (ViStatus, ~str) {
+pub fn vi_status_desc(ViSession(vi): ViSession, ViStatus(status): ViStatus) -> (ViStatus, str) {
 	let mut retStat: i32;
 	let mut buf = ::std::vec::with_capacity(256); // "the size of the desc parameter should be at least 256 bytes."
 	unsafe {
 		buf.set_len(256);
 		retStat = viStatusDesc(vi, status, buf.as_ptr());
-		for i in range(0u, 256u) {
+		for i in range(0, 256) {
 			if (buf[i] == 0) {
 				buf.set_len(i);
 				break;

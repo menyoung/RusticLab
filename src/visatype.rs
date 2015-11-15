@@ -12,14 +12,14 @@ type ViInt8 = i8;
 type ViChar = c_char;
 type ViByte = u8;
 
-type ViAddr = ~c_void;
+type ViAddr = &c_void;
 
 type ViReal32 = f32;
 type ViReal64 = f64;
 
 type ViBuf = u8;
-type ViString = ~c_char;
-type ViRsrc = ~c_char;
+type ViString = &c_char;
+type ViRsrc = &c_char;
 
 type ViBoolean = u16;
 type ViStatus = i32;
@@ -28,7 +28,7 @@ type ViObject = u32;
 type ViSession = u32;
 
 type ViAttr = u32;
-type ViConstString = ~c_char;
+type ViConstString = &c_char;
 //
 
 // from visa.h
@@ -37,27 +37,28 @@ type ViEvent = ViObject;
 type ViFindList = ViObject;
 // type ViFindList   _VI_PTR ViPFindList;
 
-#[cfg(target_pointer_width = "64")] {
-    type ViBusAddress = ViUInt64;
-    type ViBusSize = ViUInt64;
-    type ViAttrState = ViUInt64;
-}
+#[cfg(target_pointer_width = "64")]
+type ViBusAddress = ViUInt64;
+#[cfg(target_pointer_width = "64")]
+type ViBusSize = ViUInt64;
+#[cfg(target_pointer_width = "64")]
+type ViAttrState = ViUInt64;
 
-#[cfg(target_pointer_width = "32")] {
-    type ViBusAddress = ViUInt32;
-    type ViBusSize = ViUInt32;
-    type ViAttrState = ViUInt32;
-}
+#[cfg(target_pointer_width = "32")]
+type ViBusAddress = ViUInt32;
+#[cfg(target_pointer_width = "32")]
+type ViBusSize = ViUInt32;
+#[cfg(target_pointer_width = "32")]
+type ViAttrState = ViUInt32;
 
-#[cfg(target_pointer_width = "64")] {
-    type ViBusAddress64 = ViUInt64;
+#[cfg(target_pointer_width = "64")]
+type ViBusAddress64 = ViUInt64;
 // type ViBusAddress64 _VI_PTR ViPBusAddress64;
-}
 
 type ViEventType = ViUInt32;
 // type ViEventType  _VI_PTR ViPEventType;
 // type ViEventType  _VI_PTR ViAEventType;
-type void         _VI_PTR ViPAttrState;
+type ViPAttrState = &c_void;
 // type ViAttr       _VI_PTR ViPAttr;
 // type ViAttr       _VI_PTR ViAAttr;
 
