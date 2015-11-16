@@ -22,7 +22,7 @@ extern {
 	pub fn viOpen(sesn: u32, name: *const c_char, mode: u32, timeout: u32, vi: *mut u32) -> i32;
 }
 /// calls `viOpenDefaultRM(vi)`.
-pub fn viGetDefaultRM(vi: &mut u32) -> i32 { viOpenDefaultRM(vi) }
+pub unsafe fn viGetDefaultRM(vi: &mut u32) -> i32 { viOpenDefaultRM(vi) }
 
 /*- Resource Template Operations --------------------------------------------*/
 #[link(name = "VISA", kind = "framework")]

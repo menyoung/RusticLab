@@ -12,14 +12,14 @@ type ViInt8 = i8;
 type ViChar = c_char;
 type ViByte = u8;
 
-type ViAddr = &c_void;
+type ViAddr = *mut c_void;
 
 type ViReal32 = f32;
 type ViReal64 = f64;
 
 type ViBuf = u8;
-type ViString = &c_char;
-type ViRsrc = &c_char;
+type ViString = *mut c_char;
+type ViRsrc = *mut c_char;
 
 type ViBoolean = u16;
 type ViStatus = i32;
@@ -28,7 +28,7 @@ type ViObject = u32;
 type ViSession = u32;
 
 type ViAttr = u32;
-type ViConstString = &c_char;
+type ViConstString = *mut c_char;
 //
 
 // from visa.h
@@ -58,12 +58,12 @@ type ViBusAddress64 = ViUInt64;
 type ViEventType = ViUInt32;
 // type ViEventType  _VI_PTR ViPEventType;
 // type ViEventType  _VI_PTR ViAEventType;
-type ViPAttrState = &c_void;
+type ViPAttrState = *mut c_void;
 // type ViAttr       _VI_PTR ViPAttr;
 // type ViAttr       _VI_PTR ViAAttr;
 
 type ViKeyId = ViString;
-type ViPKeyId = ViPString;
+// type ViPKeyId = ViPString;
 type ViJobId = ViUInt32;
 // type ViJobId      _VI_PTR ViPJobId;
 type ViAccessMode = ViUInt32;
